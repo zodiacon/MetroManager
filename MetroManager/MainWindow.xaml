@@ -1,0 +1,41 @@
+﻿<Window x:Class="MetroManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MetroManager"
+        mc:Ignorable="d"
+        Title="Metro Package Manager" MinHeight="350" MinWidth="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <DataGrid ItemsSource="{Binding Packages}" AutoGenerateColumns="False" IsReadOnly="True" VirtualizingPanel.IsVirtualizing="False" x:Name="_packages" FontSize="12"
+                  SelectionMode="Single" SelectedItem="{Binding SelectedPackage, Mode=TwoWay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Package Name" Binding="{Binding Id.Name}" />
+                <DataGridCheckBoxColumn Header="Framework ?" Binding="{Binding IsFramework, Mode=OneTime}" />
+                <DataGridCheckBoxColumn Header="Development ?" Binding="{Binding IsDevelopmentMode, Mode=OneTime}" />
+                <DataGridCheckBoxColumn Header="Resource ?" Binding="{Binding IsResourcePackage, Mode=OneTime}" />
+                <DataGridTextColumn Header="Architecture" Binding="{Binding Id.Architecture}" />
+                <DataGridTextColumn Header="Full Name" Binding="{Binding Id.FullName}" />
+                <!--<DataGridTextColumn Header="Family Name" Binding="{Binding Id.FamilyName}" />-->
+                <DataGridTextColumn Header="Publisher" Binding="{Binding Id.Publisher}" />
+                <DataGridTextColumn Header="Installed Location" Binding="{Binding InstalledLocation.Path}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" Margin="8" Grid.Row="1">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="6,0" />
+                    <Setter Property="Padding" Value="4,2" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="Width" Value="70" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="Launch" Command="{Binding LaunchCommand}" FontWeight="Bold"/>
+            <Button Content="Uninstall" Command="{Binding UninstallCommand}" />
+        </StackPanel>
+    </Grid>
+</Window>
