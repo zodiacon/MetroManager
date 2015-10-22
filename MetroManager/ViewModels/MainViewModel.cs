@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using Windows.ApplicationModel;
 using Windows.Management.Deployment;
 
@@ -20,7 +22,10 @@ namespace MetroManager.ViewModels {
 		public MainViewModel() {
 			LaunchCommand = new DelegateCommand(
 				() => {
-					MetroLauncher.LaunchApp(SelectedPackage.Id.FullName);
+					var item = ShellObject.FromParsingName(SelectedPackage.Id.FamilyName);
+					var idprop = item.Properties.GetProperty(SystemProperties.System.AppUserModel.ID);
+					var id = (string)idprop.ValueAsObject;
+					MetroLauncher.LaunchApp(id);
 			},
 				() => SelectedPackage != null && !SelectedPackage.IsFramework);
 
