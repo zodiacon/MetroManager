@@ -4,9 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using Windows.ApplicationModel;
@@ -22,11 +24,13 @@ namespace MetroManager.ViewModels {
 		public MainViewModel() {
 			LaunchCommand = new DelegateCommand(
 				() => {
-					var item = ShellObject.FromParsingName(SelectedPackage.Id.FamilyName);
-					var idprop = item.Properties.GetProperty(SystemProperties.System.AppUserModel.ID);
-					var id = (string)idprop.ValueAsObject;
-					MetroLauncher.LaunchApp(id);
-			},
+					try {
+						MetroLauncher.LaunchApp(SelectedPackage.Id.FullName);
+					}
+					catch {
+						MessageBox.Show("Error launching app", "Metro Launcher");
+					}
+				},
 				() => SelectedPackage != null && !SelectedPackage.IsFramework);
 
 		}

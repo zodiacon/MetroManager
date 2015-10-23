@@ -35,7 +35,7 @@
                 </Style>
             </StackPanel.Resources>
             <Button Content="Launch" Command="{Binding LaunchCommand}" FontWeight="Bold"/>
-            <Button Content="Uninstall" Command="{Binding UninstallCommand}" />
+            <!--<Button Content="Uninstall" Command="{Binding UninstallCommand}" />-->
         </StackPanel>
     </Grid>
 </Window>
