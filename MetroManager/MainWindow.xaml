@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MetroManager"
+        xmlns:conv="clr-namespace:MetroManager.Converters"
         mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         Title="Metro Package Manager" MinHeight="350" MinWidth="525">
+    <Window.Resources>
+        <conv:VersionToStringConverter x:Key="version2String" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -13,15 +18,33 @@
         </Grid.RowDefinitions>
         <DataGrid ItemsSource="{Binding Packages}" AutoGenerateColumns="False" IsReadOnly="True" VirtualizingPanel.IsVirtualizing="False" x:Name="_packages" FontSize="12"
                   SelectionMode="Single" SelectedItem="{Binding SelectedPackage, Mode=TwoWay}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding LaunchCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="Padding" Value="6,2" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Package Name" Binding="{Binding Id.Name}" />
+                <DataGridTextColumn Header="Package Name" Binding="{Binding Id.Name}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridCheckBoxColumn Header="Framework ?" Binding="{Binding IsFramework, Mode=OneTime}" />
                 <DataGridCheckBoxColumn Header="Development ?" Binding="{Binding IsDevelopmentMode, Mode=OneTime}" />
                 <DataGridCheckBoxColumn Header="Resource ?" Binding="{Binding IsResourcePackage, Mode=OneTime}" />
                 <DataGridTextColumn Header="Architecture" Binding="{Binding Id.Architecture}" />
-                <DataGridTextColumn Header="Full Name" Binding="{Binding Id.FullName}" />
+                <DataGridTextColumn Header="Package Full Name" Binding="{Binding Id.FullName}" />
                 <!--<DataGridTextColumn Header="Family Name" Binding="{Binding Id.FamilyName}" />-->
-                <DataGridTextColumn Header="Publisher" Binding="{Binding Id.Publisher}" />
+                <DataGridTextColumn Header="Version" Binding="{Binding Id.Version, Converter={StaticResource version2String}}" />
                 <DataGridTextColumn Header="Installed Location" Binding="{Binding InstalledLocation.Path}" />
             </DataGrid.Columns>
         </DataGrid>
