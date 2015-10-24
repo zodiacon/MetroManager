@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Input;
-using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Mvvm;
-using Microsoft.Win32;
-using Microsoft.WindowsAPICodePack.Shell;
-using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
+using Prism.Commands;
+using Prism.Mvvm;
 using Windows.ApplicationModel;
 using Windows.Management.Deployment;
 
@@ -31,7 +22,8 @@ namespace MetroManager.ViewModels {
 						MessageBox.Show("Error launching app", "Metro Launcher");
 					}
 				},
-				() => SelectedPackage != null && !SelectedPackage.IsFramework);
+				() => SelectedPackage != null && !SelectedPackage.IsFramework)
+				.ObservesProperty(() => SelectedPackage);
 
 		}
 
@@ -39,11 +31,7 @@ namespace MetroManager.ViewModels {
 
 		public Package SelectedPackage {
 			get { return _selectedPackage; }
-			set {
-				if(SetProperty(ref _selectedPackage, value)) {
-					LaunchCommand.RaiseCanExecuteChanged();
-				}
-			}
+			set { SetProperty(ref _selectedPackage, value);	}
 		}
 
 	}
