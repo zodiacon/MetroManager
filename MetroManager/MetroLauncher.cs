@@ -11,11 +11,6 @@ namespace MetroManager {
 	[ComImport, Guid("45BA127D-10A8-46EA-8AB7-56EA9078943C")]
 	class ApplicationActivationManager { }
 
-	[StructLayout(LayoutKind.Sequential)]
-	class PackageInfoReference {
-
-	}
-
 	static class MetroLauncher {
 		public static uint LaunchApp(string packageFullName, string arguments = null) {
 			IntPtr pir = IntPtr.Zero;
