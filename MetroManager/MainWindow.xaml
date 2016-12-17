@@ -58,6 +58,7 @@
                 </Style>
             </StackPanel.Resources>
             <Button Content="Launch" Command="{Binding LaunchCommand}" FontWeight="Bold"/>
+            <Button Content="Refresh" Command="{Binding RefreshCommand}" Margin="10,0,0,0"/>
             <!--<Button Content="Uninstall" Command="{Binding UninstallCommand}" />-->
         </StackPanel>
     </Grid>

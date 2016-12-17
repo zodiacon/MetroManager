@@ -4,6 +4,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Windows.ApplicationModel;
 using Windows.Management.Deployment;
+using System.Windows.Input;
 
 namespace MetroManager.ViewModels {
 	class MainViewModel : BindableBase {
@@ -34,5 +35,7 @@ namespace MetroManager.ViewModels {
 			set { SetProperty(ref _selectedPackage, value);	}
 		}
 
+
+		public ICommand RefreshCommand => new DelegateCommand(() => OnPropertyChanged(nameof(Packages)));
 	}
 }
