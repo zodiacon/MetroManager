@@ -1,11 +1,13 @@
-﻿<Window x:Class="MetroManager.MainWindow"
+﻿<metro:MetroWindow x:Class="MetroManager.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MetroManager"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:conv="clr-namespace:MetroManager.Converters"
         mc:Ignorable="d"
+        Icon="/icons/package.ico" TitleCaps="False"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         Title="Metro Package Manager" MinHeight="350" MinWidth="525">
     <Window.Resources>
@@ -13,10 +15,11 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <DataGrid ItemsSource="{Binding Packages}" AutoGenerateColumns="False" IsReadOnly="True" VirtualizingPanel.IsVirtualizing="False" x:Name="_packages" FontSize="12"
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Packages}" AutoGenerateColumns="False" IsReadOnly="True" VirtualizingPanel.IsVirtualizing="True" x:Name="_packages" FontSize="12"
                   SelectionMode="Single" SelectedItem="{Binding SelectedPackage, Mode=TwoWay}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
@@ -48,18 +51,10 @@
                 <DataGridTextColumn Header="Installed Location" Binding="{Binding InstalledLocation.Path}" />
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Orientation="Horizontal" Margin="8" Grid.Row="1">
-            <StackPanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Margin" Value="6,0" />
-                    <Setter Property="Padding" Value="4,2" />
-                    <Setter Property="FontSize" Value="14" />
-                    <Setter Property="Width" Value="70" />
-                </Style>
-            </StackPanel.Resources>
+        <ToolBar Margin="2" Grid.Row="0">
             <Button Content="Launch" Command="{Binding LaunchCommand}" FontWeight="Bold"/>
             <Button Content="Refresh" Command="{Binding RefreshCommand}" Margin="10,0,0,0"/>
             <!--<Button Content="Uninstall" Command="{Binding UninstallCommand}" />-->
-        </StackPanel>
+        </ToolBar>
     </Grid>
-</Window>
+</metro:MetroWindow>

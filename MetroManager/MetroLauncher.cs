@@ -13,7 +13,7 @@ namespace MetroManager {
 
 	static class MetroLauncher {
 		public static uint LaunchApp(string packageFullName, string arguments = null) {
-			IntPtr pir = IntPtr.Zero;
+			var pir = IntPtr.Zero;
 			try {
 				int error = OpenPackageInfoByFullName(packageFullName, 0, out pir);
 				Debug.Assert(error == 0);
