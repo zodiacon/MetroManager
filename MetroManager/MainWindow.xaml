@@ -9,17 +9,21 @@
         mc:Ignorable="d"
         Icon="/icons/package.ico" TitleCaps="False"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        Title="Metro Package Manager" MinHeight="350" MinWidth="525">
+        Title="Metro Package Manager" MinHeight="350" MinWidth="525"
+                   BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
     <Window.Resources>
         <conv:VersionToStringConverter x:Key="version2String" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Packages}" AutoGenerateColumns="False" IsReadOnly="True" VirtualizingPanel.IsVirtualizing="True" x:Name="_packages" FontSize="12"
+        <TextBox Grid.Row="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Delay=300}" metro:TextBoxHelper.Watermark="Type to search" 
+                 metro:TextBoxHelper.ClearTextButton="True" Width="400" HorizontalAlignment="Left"/>
+        <DataGrid Grid.Row="2" ItemsSource="{Binding Packages}" AutoGenerateColumns="False" IsReadOnly="True" VirtualizingPanel.IsVirtualizing="True" x:Name="_packages" FontSize="12"
                   SelectionMode="Single" SelectedItem="{Binding SelectedPackage, Mode=TwoWay}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
@@ -53,8 +57,12 @@
         </DataGrid>
         <ToolBar Margin="2" Grid.Row="0">
             <Button Content="Launch" Command="{Binding LaunchCommand}" FontWeight="Bold"/>
-            <Button Content="Refresh" Command="{Binding RefreshCommand}" Margin="10,0,0,0"/>
+            <Separator />
+            <Button Content="Refresh" Command="{Binding RefreshCommand}" />
             <!--<Button Content="Uninstall" Command="{Binding UninstallCommand}" />-->
         </ToolBar>
+        <StatusBar Grid.Row="3">
+            <TextBlock Text="{Binding Packages.Count, StringFormat=Packages: \{0\}}" />
+        </StatusBar>
     </Grid>
 </metro:MetroWindow>
