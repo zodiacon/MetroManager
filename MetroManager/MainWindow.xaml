@@ -24,7 +24,7 @@
         <TextBox Grid.Row="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Delay=300}" metro:TextBoxHelper.Watermark="Type to search" 
                  metro:TextBoxHelper.ClearTextButton="True" Width="400" HorizontalAlignment="Left"/>
         <DataGrid Grid.Row="2" ItemsSource="{Binding Packages}" AutoGenerateColumns="False" IsReadOnly="True" VirtualizingPanel.IsVirtualizing="True" x:Name="_packages" FontSize="12"
-                  SelectionMode="Single" SelectedItem="{Binding SelectedPackage, Mode=TwoWay}">
+                  SelectionMode="Single" SelectedItem="{Binding SelectedPackage, Mode=TwoWay}" VirtualizingPanel.VirtualizationMode="Recycling">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding LaunchCommand}" />
@@ -48,9 +48,9 @@
                 <DataGridCheckBoxColumn Header="Framework ?" Binding="{Binding IsFramework, Mode=OneTime}" />
                 <DataGridCheckBoxColumn Header="Development ?" Binding="{Binding IsDevelopmentMode, Mode=OneTime}" />
                 <DataGridCheckBoxColumn Header="Resource ?" Binding="{Binding IsResourcePackage, Mode=OneTime}" />
-                <DataGridTextColumn Header="Architecture" Binding="{Binding Id.Architecture}" />
-                <DataGridTextColumn Header="Package Full Name" Binding="{Binding Id.FullName}" />
-                <!--<DataGridTextColumn Header="Family Name" Binding="{Binding Id.FamilyName}" />-->
+                <DataGridTextColumn Header="Architecture" Binding="{Binding Id.Architecture, Mode=OneTime}" />
+                <DataGridTextColumn Header="Package Full Name" Binding="{Binding Id.FullName, Mode=OneTime}" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Id.Name, Mode=OneTime}" />
                 <DataGridTextColumn Header="Version" Binding="{Binding Id.Version, Converter={StaticResource version2String}}" />
                 <DataGridTextColumn Header="Installed Location" Binding="{Binding InstalledLocation.Path}" />
             </DataGrid.Columns>
